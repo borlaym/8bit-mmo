@@ -1,6 +1,8 @@
-import { SPRITE_WIDTH, SPRITE_HEIGHT, CHARACTER_ACTION_WALK } from './SpriteSheet'
+/* @flow */
+
+import SpriteSheet, { SPRITE_WIDTH, SPRITE_HEIGHT, CHARACTER_ACTION_WALK } from './SpriteSheet'
 import { SOUTH } from './Direction'
-import Filters, { FILTER_NO_FILTER } from './util/Filters'
+import Filters, { FILTER_NO_FILTER } from '../utils/Filters'
 
 /**
  * This class is only responsible for rendering an object with given parameters.
@@ -9,7 +11,19 @@ import Filters, { FILTER_NO_FILTER } from './util/Filters'
  * Its canvas property can be used to render the object's current representation at any given time
  */
 class Drawable {
-  constructor (props) {
+
+  spritesheet: SpriteSheet;
+  canvas: HTMLCanvasElement;
+  ctx: any;
+  state: {
+    direction: string,
+    action: string,
+    frame: number,
+    filter: string,
+    filterColor: Array<number>
+  };
+
+  constructor (props: {spritesheet: SpriteSheet}) {
     this.spritesheet = props.spritesheet
     this.canvas = document.createElement('canvas')
     this.canvas.width = SPRITE_WIDTH
@@ -49,7 +63,7 @@ class Drawable {
       } else {
         // If there is a filter that needs to be applied, copy the image data from the spritesheet
         // then apply the filter before drawing onto the main canvas
-        const canvas = document.createElement('canvas')
+        const canvas: any = document.createElement('canvas')
         const ctx = canvas.getContext('2d')
         ctx.drawImage(
           this.spritesheet.image,
@@ -78,7 +92,7 @@ class Drawable {
   * Set the direction, action, frame and other states of the object
   * @param {Object} state A hash containing values for direction, action, frame, filter, filterColor
   */
-  setState (state) {
+  setState (state: Object): void {
     this.state = {
       ...this.state,
       ...state

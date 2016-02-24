@@ -1,3 +1,5 @@
+/* @flow */
+
 export const NORTH = 'NORTH'
 export const EAST = 'EAST'
 export const SOUTH = 'SOUTH'
@@ -14,21 +16,21 @@ export const LEFT = WEST
 /**
  * Class for keeping static utility functions
  */
-class Direction {}
-
-Direction.toSpriteSheetColumn = (direction) => {
-  switch (direction) {
-    case NORTH:
-      return 2
-    case EAST:
-      return 3
-    case SOUTH:
-      return 0
-    case WEST:
-      return 1
-    default:
-      console.warn('Invalid property passed to Direction.toSpriteSheetColumn: ', direction)
-      return 0
+class Direction {
+  static toSpriteSheetColumn (direction: string): number {
+    switch (direction) {
+      case NORTH:
+        return 2
+      case EAST:
+        return 3
+      case SOUTH:
+        return 0
+      case WEST:
+        return 1
+      default:
+        console.warn('Invalid property passed to Direction.toSpriteSheetColumn: ', direction)
+        return 0
+    }
   }
 }
 

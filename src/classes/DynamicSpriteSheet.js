@@ -1,3 +1,5 @@
+/* @flow */
+
 import SpriteSheet from './SpriteSheet'
 
 /**
@@ -5,7 +7,9 @@ import SpriteSheet from './SpriteSheet'
  */
 class DynamicSpriteSheet extends SpriteSheet {
 
-  load () {
+  layers: Array<Promise>;
+
+  load (): Promise {
     return Promise.all(this.layers)
   }
 

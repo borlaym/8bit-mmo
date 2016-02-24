@@ -1,3 +1,5 @@
+/* @flow */
+
 import Direction from './Direction'
 
 export const SPRITE_WIDTH = 16
@@ -41,7 +43,11 @@ const _actionToRow = (actionName) => {
  * Each row has a different action or different frames of an action
  */
 class SpriteSheet {
-  constructor (props) {
+
+  fileName: string = '';
+  image: ?Image = null;
+
+  constructor (props: {fileName: string}): void {
     this.fileName = props.fileName
     this.load()
   }
@@ -50,7 +56,7 @@ class SpriteSheet {
   * Loads the source image into an image cache
   * @return {Promise}
   */
-  load () {
+  load (): Promise {
     _imageCache[this.fileName] = new Image()
     this.image = _imageCache[this.fileName]
     return new Promise((resolve, reject) => {
@@ -66,7 +72,7 @@ class SpriteSheet {
   * @param  {Number} frame     Which frame of the given action to display (0 or 1)
   * @return {Array}           x and y coordinates of the sprite on this spritesheet
   */
-  getSpritePosition (direction, action, frame) {
+  getSpritePosition (direction: string, action: string, frame: number): Array<number> {
     const column = Direction.toSpriteSheetColumn(direction)
     const row = _actionToRow(action) + frame
     return [column * SPRITE_WIDTH, row * SPRITE_HEIGHT]
